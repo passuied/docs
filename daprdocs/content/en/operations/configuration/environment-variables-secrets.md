@@ -5,28 +5,27 @@ linkTitle: "Environment Variables from Secrets"
 weight: 7500
 description: "Inject Environment Variables from Kubernetes Secrets into Dapr sidecar"
 ---
-In special cases, Dapr sidecar needs an environment variable injected into it. This use case may be required by a Component, a 3rd party library, or a module that uses environment variables to configure the said Component or customize its behavior. This can be useful for both production and non-production environments.
+In special cases, the Dapr sidecar needs an environment variable injected into it. This use case may be required by a component, a 3rd party library, or a module that uses environment variables to configure the said component or customize its behavior. This can be useful for both production and non-production environments.
 
 ## Overview
-In Dapr 1.15 the new annotation was introduced, `dapr.io/env-from-secret`, similarly to `dapr.io/env`, see [here]({{<ref arguments-annotations-overview>}}).
-This annotation allows users to inject an environment variable with a value from a Secret, into the Dapr sidecar.
+In Dapr 1.15, the new `dapr.io/env-from-secret` annotation was introduced, [similar to `dapr.io/env`]({{< ref arguments-annotations-overview >}}).
+With this annotation, you can inject an environment variable into the Dapr sidecar, with a value from a secret.
 
 ### Annotation format
 The values of this annotation are formatted like so:
 
 - Single key secret: `<ENV_VAR_NAME>=<SECRET_NAME>`
-- Multi key-value secret: `<ENV_VAR_NAME>=<SECRET_NAME>:<SECRET_KEY>`
+- Multi key/value secret: `<ENV_VAR_NAME>=<SECRET_NAME>:<SECRET_KEY>`
 
-`<ENV_VAR_NAME>` is required to follow the `C_IDENTIFIER` format and captured by the following regex: `[A-Za-z_][A-Za-z0-9_]*`<br/>
+`<ENV_VAR_NAME>` is required to follow the `C_IDENTIFIER` format and captured by the `[A-Za-z_][A-Za-z0-9_]*` regex:
 - Must start with a letter or underscore
-- The rest of the identifier to contain letters, digits, or underscores
+- The rest of the identifier contains letters, digits, or underscores
 
-Due to the restriction of the `secretKeyRef`, `name` field is required, so both `name` and `key` must be set (read more [here](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#environment-variables), in section "env.valueFrom.secretKeyRef.name")<br/> 
-In this case, Dapr will set both to the same value.
+The `name` field is required due to the restriction of the `secretKeyRef`, so both `name` and `key` must be set. [Learn more from the "env.valueFrom.secretKeyRef.name" section in this Kubernetes documentation.](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#environment-variables)
+In this case, Dapr sets both to the same value.
 
 ## Configuring single key secret environment variable
-Example:<br/>
-Add the `dapr.io/env-from-secret` annotation to Deployment
+In the following example, the `dapr.io/env-from-secret` annotation is added to the Deployment.
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -48,7 +47,9 @@ spec:
         - containerPort: 3000
         imagePullPolicy: Always
 ```
-Annotation: `dapr.io/env-from-secret: "AUTH_TOKEN=auth-headers-secret"` will be injected as:
+
+The `dapr.io/env-from-secret` annotation with a value of `"AUTH_TOKEN=auth-headers-secret"` is injected as:
+
 ```yaml
 env:
 - name: AUTH_TOKEN
@@ -57,8 +58,12 @@ env:
         name: auth-headers-secret
         key: auth-headers-secret
 ```
-This will require the Secret to have both `name` and `key` fields with the same value, "auth-headers-secret". <br/>
-Example secret (for demo purposes only, don't store secrets in plain text)
+This requires the secret to have both `name` and `key` fields with the same value, "auth-headers-secret".
+
+**Example secret**
+
+> **Note:** The following example is for demo purposes only. It's not recommended to store secrets in plain text.
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -71,7 +76,7 @@ stringData:
 
 ## Configuring multi-key secret environment variable
 
-Add the `dapr.io/env-from-secret` annotation to Deployment
+In the following example, the `dapr.io/env-from-secret` annotation is added to the Deployment.
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -93,7 +98,7 @@ spec:
         - containerPort: 3000
         imagePullPolicy: Always
 ```
-Annotation: `dapr.io/env-from-secret: "AUTH_TOKEN=auth-headers-secret:auth-header-value"` will be injected as:
+The `dapr.io/env-from-secret` annotation with a value of `"AUTH_TOKEN=auth-headers-secret:auth-header-value"` is injected as:
 ```yaml
 env:
 - name: AUTH_TOKEN
@@ -102,7 +107,10 @@ env:
         name: auth-headers-secret
         key: auth-header-value
 ```
-Example secret (for demo purposes only, don't store secrets in plain text)
+
+**Example secret**
+
+ > **Note:** The following example is for demo purposes only. It's not recommended to store secrets in plain text.
 ```yaml
 apiVersion: v1
 kind: Secret
