@@ -92,7 +92,9 @@ This component supports **output binding** with the following operations:
 
 ## Receiving events
 
-You can use the Event Grid binding to receive events from a variety of sources and actions. 
+You can use the Event Grid binding to receive events from a variety of sources and actions. [Learn more about all of the available event sources and handlers that work with Event Grid.](https://learn.microsoft.com/azure/event-grid/overview)
+
+In the following table, you can find the list of associated Dapr components.
 
 | Event sources | Dapr components |
 | ------------- | --------------- |
