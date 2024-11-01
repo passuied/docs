@@ -63,12 +63,9 @@ This component supports **output binding** with the following operations:
 - `delete` : [Delete blob](#delete-blob)
 - `list`: [List blobs](#list-blobs)
 
-The Blob storage component's **input binding** functionality, such as triggering notifications for uploaded files, is served by the [Azure Event Grid binding]({{< ref eventgrid.md >}}). 
+The Blob storage component's **input binding** triggers and pushes events using [Azure Event Grid]({{< ref eventgrid.md >}}). 
  
-Refer to the following guides for set up and component specs:
-
-- [Reacting to Blob storage events](https://learn.microsoft.com/azure/storage/blobs/storage-blob-event-overview)
-- [Azure Event Grid binding spec]({{< ref eventgrid.md >}})
+Refer to the [Reacting to Blob storage events](https://learn.microsoft.com/azure/storage/blobs/storage-blob-event-overview) guide for more set up and more information.
 
 ### Create blob
 
