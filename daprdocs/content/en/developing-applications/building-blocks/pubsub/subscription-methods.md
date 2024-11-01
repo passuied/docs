@@ -41,13 +41,12 @@ spec:
   pubsubname: pubsub
 scopes:
 - orderprocessing
-- checkout
 ```
 
 Here the subscription called `order`: 
 - Uses the pub/sub component called `pubsub` to subscribes to the topic called `orders`.
 - Sets the `route` field to send all topic messages to the `/orders` endpoint in the app.
-- Sets `scopes` field to scope this subscription for access only by apps with IDs `orderprocessing` and `checkout`.
+- Sets `scopes` field to scope this subscription for access only by apps with ID `orderprocessing`.
 
 When running Dapr, set the YAML component file path to point Dapr to the component.
 
