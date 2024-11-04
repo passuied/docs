@@ -53,6 +53,12 @@ spec:
     value: 2.0.0
   - name: disableTls # Optional. Disable TLS. This is not safe for production!! You should read the `Mutual TLS` section for how to use TLS.
     value: "true"
+  - name: consumerFetchMin # Optional. Advanced setting. The minimum number of message bytes to fetch in a request - the broker will wait until at least this many are available.
+    value: 1
+  - name: consumerFetchDefault # Optional. Advanced setting. The default number of message bytes to fetch from the broker in each request.
+    value: 2097152
+  - name: channelBufferSize # Optional. Advanced setting. The number of events to buffer in internal and external channels.
+    value: 512
   - name: schemaRegistryURL # Optional. When using Schema Registry Avro serialization/deserialization. The Schema Registry URL.
     value: http://localhost:8081
   - name: schemaRegistryAPIKey # Optional. When using Schema Registry Avro serialization/deserialization. The Schema Registry API Key.
