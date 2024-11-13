@@ -468,7 +468,7 @@ Apache Kafka supports the following bulk metadata options:
 
 When invoking the Kafka pub/sub, its possible to provide an optional partition key by using the `metadata` query param in the request url.
 
-The param name can either `partitionKey` or `__key` 
+The param name can either be `partitionKey` or `__key` 
 
 Example:
 
@@ -498,7 +498,7 @@ curl -X POST http://localhost:3500/v1.0/publish/myKafka/myTopic?metadata.correla
 ### Kafka Pubsub special message headers received on consumer side
 
 When consuming messages, special message metadata are being automatically passed as headers. These are:
-- `__key`: the message key if applicable
+- `__key`: the message key if available
 - `__topic`: the topic for the message
 - `__partition`: the partition number for the message
 - `__offset`: the offset of the message in the partition
